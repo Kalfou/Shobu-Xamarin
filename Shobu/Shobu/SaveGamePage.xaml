@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Shobu.SaveGamePage"
+             Title="Save Game">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="NameStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="Margin" Value="20,20,10,0" />
+            </Style>
+            <Style x:Key="ModifiedStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="Margin" Value="25,0,5,0" />
+            </Style>
+            <Style x:Key="MainButtonStyle" TargetType="Button">
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="BackgroundColor" Value="#A0522D" />
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="BorderColor" Value="#A0522D" />
+                <Setter Property="TextColor" Value="#FFE4C4" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Orientation="Vertical" BackgroundColor="#F4F0E4">
+        <Entry x:Name="saveNameEntry"/>
+        <Button Text="Save"
+                Command="{Binding NewSaveCommand}"
+                CommandParameter="{Binding Source={x:Reference saveNameEntry}, Path=Text}"
+                Style="{StaticResource MainButtonStyle}" />
+
+        <ListView ItemsSource="{Binding StoredGames}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding Name}" Style="{StaticResource NameStyle}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SaveGameCommand}" CommandParameter="{Binding Name}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="{Binding Modified}" Style="{StaticResource ModifiedStyle}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
